@@ -6,11 +6,18 @@ The pipeline pulls from the NYC DOHMH SODA API daily, lands raw JSON in S3, clea
 
 ---
 
+
+## 👉 [View the live dashboard here](https://public.tableau.com/views/NYCRestaurantInspectionanalysis_17792010976800/DashbNYCRestaurantInspectionIntelligenceC-SuiteOverviewoard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
 ## Architecture
 
-![Pipeline Architecture]()
-
+![Full pipeline](docs/arc.png)
 ---
+![dbt lineage](docs/dbt.png)
+---
+![SQL cleaning](docs/sql.png)
+---
+![Great expectations](docs/ge.png)
 
 ## Stack
 
@@ -22,7 +29,7 @@ The pipeline pulls from the NYC DOHMH SODA API daily, lands raw JSON in S3, clea
 | Quality | Great Expectations 0.18 |
 | Monitoring | CloudWatch Logs, Alarms, SNS |
 | IaC | CloudFormation |
-| Dashboard | Power BI Desktop + On-premises Gateway |
+| Dashboard | Power BI Desktop / Tableau + On-premises Gateway |
 | CI/CD | GitHub Actions |
 
 ---
@@ -133,10 +140,53 @@ Add these in **Settings → Secrets and variables → Actions**:
 
 Runs daily at 06:00 UTC. Trigger manually via **Actions → Run workflow**.
 
-### 6. Power BI
+### 6. Tableau dashboard
+
+For the compliance KPI dashboard, I used Tableau Public instead of Power BI.
+
+The original plan was Power BI, but Power BI requires a Pro or Premium license 
+to publish and share dashboards — there is no free hosting option for external 
+viewers. Tableau Public solves this completely: you can connect to a live data 
+source, build the full dashboard, publish it to Tableau Public, and share a 
+link that anyone can view in a browser without an account or license.
+
+The dashboard connects directly to the gold schema on RDS PostgreSQL, pulling 
+from two tables:
+
+- `gold.agg_borough_kpis` — monthly compliance KPIs per borough (grade A rate, 
+  average score, critical violations)
+- `gold.fct_inspections` — inspection-level detail for drill-down views
+
+### Live dashboard
+
+👉 [View the live dashboard here](https://public.tableau.com/views/NYCRestaurantInspectionanalysis_17792010976800/DashbNYCRestaurantInspectionIntelligenceC-SuiteOverviewoard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
+### Connecting Tableau to RDS
+
+1. Open Tableau Desktop (free trial) or Tableau Public Desktop (free)
+2. Connect → PostgreSQL
+3. Server: your RDS endpoint
+4. Port: 5432
+5. Database: inspections
+6. Username / Password: use the `powerbi_reader` role created earlier
+7. Select `gold` schema → drag in `agg_borough_kpis` and `fct_inspections`
+
+###  Power BI
 
 Install the PostgreSQL ODBC driver, then: Power BI Desktop → **Get Data → PostgreSQL** → your RDS endpoint on port 5432. Load `gold.agg_borough_kpis` in Import mode and `gold.fct_inspections` in DirectQuery. If your RDS is in a private subnet (it should be), you'll need the Power BI On-premises Data Gateway running on an EC2 in the same subnet.
 
+### Publishing
+
+1. File → Save to Tableau Public
+2. Sign in with your free Tableau Public account
+3. Dashboard is now live at a public URL — share it with anyone
+
+### Key views in the dashboard
+
+- Borough compliance map — grade A rate per borough, colour-coded
+- Monthly trend lines — average inspection score over time per borough  
+- Critical violations breakdown — total critical violations by borough and month
+- Drill-down — click any borough to filter to individual restaurant inspections
 ---
 
 ## Credentials
@@ -155,6 +205,3 @@ Results go to `/nyc-inspections/great-expectations` in CloudWatch Logs as struct
 
 ---
 
-## License
-
-MIT
