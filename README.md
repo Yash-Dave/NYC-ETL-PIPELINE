@@ -5,9 +5,9 @@ I built this to answer a straightforward question: which NYC boroughs have the w
 The pipeline pulls from the NYC DOHMH SODA API daily, lands raw JSON in S3, cleans and deduplicates it with dbt, runs 17 data quality checks, and surfaces compliance KPIs in Power BI.
 
 ---
+## Live Dashboard
 
-
-## 👉 [View the live dashboard here](https://public.tableau.com/views/NYCRestaurantInspectionanalysis_17792010976800/DashbNYCRestaurantInspectionIntelligenceC-SuiteOverviewoard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+### 👉 [View the live dashboard here](https://public.tableau.com/views/NYCRestaurantInspectionanalysis_17792010976800/DashbNYCRestaurantInspectionIntelligenceC-SuiteOverviewoard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ## Architecture
 
@@ -156,10 +156,6 @@ from two tables:
 - `gold.agg_borough_kpis` — monthly compliance KPIs per borough (grade A rate, 
   average score, critical violations)
 - `gold.fct_inspections` — inspection-level detail for drill-down views
-
-### Live dashboard
-
-👉 [View the live dashboard here](https://public.tableau.com/views/NYCRestaurantInspectionanalysis_17792010976800/DashbNYCRestaurantInspectionIntelligenceC-SuiteOverviewoard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ### Connecting Tableau to RDS
 
