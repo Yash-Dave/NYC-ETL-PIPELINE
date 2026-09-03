@@ -1,0 +1,26 @@
+name: 'nyc_inspections'
+version: '1.0.0'
+config-version: 2
+
+profile: 'nyc_inspections'
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  nyc_inspections:
+    bronze:
+      +materialized: view        # bronze = lightweight views
+      +schema: bronze
+    silver:
+      +materialized: table       # silver = full tables
+      +schema: silver
+    gold:
+      +materialized: table       # gold = full tables
+      +schema: gold

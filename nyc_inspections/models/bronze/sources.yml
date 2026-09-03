@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: public
+    description: "Raw ingested data from NYC Open Data API"
+    tables:
+      - name: inspections_bronze
+        description: "Raw restaurant inspection records loaded from S3"
+        columns:
+          - name: camis
+            description: "Unique restaurant identifier"
+          - name: inspection_date
+            description: "Date of inspection"
+          - name: score
+            description: "Raw inspection score as text"
+          - name: grade
+            description: "Letter grade A/B/C/Z/P/N"

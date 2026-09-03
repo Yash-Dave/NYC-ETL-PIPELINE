@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: silver_inspections
+    description: "Cleaned and enriched restaurant inspection records"
+    columns:
+      - name: camis
+        description: "Unique restaurant ID"
+      - name: borough
+        description: "NYC borough name"
+      - name: inspection_date
+        description: "Date of inspection"
+      - name: inspection_score
+        description: "Integer penalty score"
+      - name: grade
+        description: "Letter grade A/B/C/Z/P/N or UNKNOWN"
+      - name: critical_flag
+        description: "Critical / Not Critical / Not Applicable"
+      - name: department_category
+        description: "Business department derived from violation code"
+      - name: risk_level
+        description: "1=low 2=medium 3=high"
+      - name: is_grade_a
+        description: "True if restaurant received grade A"
