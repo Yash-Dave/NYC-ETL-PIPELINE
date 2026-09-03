@@ -10,15 +10,12 @@ The pipeline pulls from the NYC DOHMH SODA API daily, lands raw JSON in S3, clea
 ### 👉 [View the live dashboard here](https://public.tableau.com/views/NYCRestaurantInspectionanalysis_17792010976800/DashbNYCRestaurantInspectionIntelligenceC-SuiteOverviewoard1?:language=en-GB&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ## Architecture
-
+---
 ![Full pipeline](docs/arc.png)
----
 ![dbt lineage](docs/dbt.png)
----
 ![SQL cleaning](docs/sql.png)
----
 ![Great expectations](docs/ge.png)
-
+---
 ## Stack
 
 | Layer | Tech |
