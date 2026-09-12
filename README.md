@@ -192,7 +192,7 @@ For production: replace the IAM user key in CI with an OIDC role (GitHub's OIDC 
 
 ## Data quality
 
-17 Great Expectations rules run after every dbt transform: row count ≥ 200k, column existence for all 10 key fields, `camis` not null, `inspection_date` not null and not in the future and not before 1990, `boro` restricted to the five borough names, `grade` restricted to A/B/C/Z/P/N, `score` between 0 and 200, `is_critical` populated on at least 90% of rows, unique `(camis, inspection_date, violation_code)` triplets, 5-digit zipcode format, `cuisine` and `restaurant_name` not null, `violation_code` matching the expected format, and lat/lon within the NYC bounding box.
+25 Great Expectations rules run after every dbt transform: row count ≥ 200k, column existence for all 10 key fields, `camis` not null, `inspection_date` not null and not in the future and not before 1990, `boro` restricted to the five borough names, `grade` restricted to A/B/C/Z/P/N, `score` between 0 and 200, `is_critical` populated on at least 90% of rows, unique `(camis, inspection_date, violation_code)` triplets, 5-digit zipcode format, `cuisine` and `restaurant_name` not null, `violation_code` matching the expected format, and lat/lon within the NYC bounding box.
 
 Results go to `/nyc-inspections/great-expectations` in CloudWatch Logs as structured JSON. A metric filter on `success: false` triggers an SNS email within 5 minutes.
 
